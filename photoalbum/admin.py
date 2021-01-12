@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, PostImage
+from .models import Post, PostImage, Premium, PremAlbum, Vip, VipAlbum
 
 
 class PostImageAdmin(admin.StackedInline):
@@ -17,4 +17,43 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(PostImage)
 class PostImageAdmin(admin.ModelAdmin):
+    pass
+
+
+#-----------------
+
+class PremAlbumAdmin(admin.StackedInline):
+    model = PremAlbum
+
+
+@admin.register(Premium)
+class PremAdmin(admin.ModelAdmin):
+    inlines = [PremAlbumAdmin]
+
+    class Meta:
+       model = Premium
+
+
+@admin.register(PremAlbum)
+class PremAlbumAdmin(admin.ModelAdmin):
+    pass
+
+
+#----------
+
+
+class VipAlbumAdmin(admin.StackedInline):
+    model = VipAlbum
+
+
+@admin.register(Vip)
+class VipAdmin(admin.ModelAdmin):
+    inlines = [VipAlbumAdmin]
+
+    class Meta:
+       model = Vip
+
+
+@admin.register(VipAlbum)
+class VipAlbumAdmin(admin.ModelAdmin):
     pass

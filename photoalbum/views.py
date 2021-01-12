@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Post, PostImage
+from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum
 
 
 def main_view(request):
@@ -9,7 +9,9 @@ def main_view(request):
 
 def blog_view(request):
     posts = Post.objects.all()
-    return render(request, 'blog.html', {'posts': posts})
+    prems = Premium.objects.all()
+    vips = Vip.objects.all()
+    return render(request, 'blog.html', {'posts': posts, 'prems': prems, 'vips': vips})
 
 
 def detail_view(request, id):
@@ -39,3 +41,61 @@ def create_post_view(request):
             )
 
     return render(request, 'create-post.html')
+
+
+def premdetail_view(request, id):
+    prem = get_object_or_404(Premium, id=id)
+    photos = PremAlbum.objects.filter(post=prem)
+    return render(request, 'detail.html', {
+        'prem': prem,
+        'photos': photos
+    })
+
+
+def create_prem_view(request):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        prem = Premium.objects.create(
+            title=title,
+            description=description
+        )
+
+        for file_num in range(0, int(length)):
+            PremAlbum.objects.create(
+                post=prem,
+                images=request.FILES.get(f'images{file_num}')
+            )
+
+    return render(request, 'createprem-post.html')
+
+
+def vipdetail_view(request, id):
+    vip = get_object_or_404(Vip, id=id)
+    photos = VipAlbum.objects.filter(post=vip)
+    return render(request, 'vipdetail.html', {
+        'vip': vip,
+        'photos': photos
+    })
+
+
+def create_vip_view(request):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        vip = Vip.objects.create(
+            title=title,
+            description=description
+        )
+
+        for file_num in range(0, int(length)):
+            VipAlbum.objects.create(
+                post=vip,
+                images=request.FILES.get(f'images{file_num}')
+            )
+
+    return render(request, 'createvip-post.html')
