@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, PostImage, Premium, PremAlbum, Vip, VipAlbum, Category
+from .models import Post, PostImage, Premium, PremAlbum, Vip, VipAlbum, Category, Contact
 
 
 class PostImageAdmin(admin.StackedInline):
@@ -60,3 +60,5 @@ class VipAlbumAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category)
+
+admin.site.register(Contact)

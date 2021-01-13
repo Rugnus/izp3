@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.base import View
 
 from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum, Category
-
+from .forms import ContactForm
 
 def main_view(request):
     return render(request, 'main.html')
@@ -108,3 +109,15 @@ def catalog_view(request):
     image = Category.image
 
     return render(request, 'catalog.html', {'categories': categories})
+
+
+def contact_view(request):
+    return render(request, 'contacts.html')
+
+
+class AddContact(View):
+    def post(self, request):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("/")
