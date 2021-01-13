@@ -47,3 +47,16 @@ class VipAlbum(models.Model):
 
     def __str__(self):
         return self.post.title
+
+
+class Category(models.Model):
+    name = models.CharField('Категория', max_length=150)
+    description = models.TextField('Описание')
+    image = models.ImageField("Изображение", upload_to='../media/images')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категерия'
+        verbose_name_plural = 'Категории'

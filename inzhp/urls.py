@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_view, name="main"),
     path('blog/', views.blog_view, name='blog'),
+    path('catalog/', views.catalog_view, name='catalog'),
     path('create-post/', views.create_post_view, name='create-post'),
     path('createprem-post/', views.create_prem_view, name="createprem-post"),
     path('createvip-post/', views.create_vip_view, name="createvip-post"),

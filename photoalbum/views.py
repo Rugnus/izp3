@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum
+from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum, Category
 
 
 def main_view(request):
@@ -99,3 +99,12 @@ def create_vip_view(request):
             )
 
     return render(request, 'createvip-post.html')
+
+
+def catalog_view(request):
+    categories = Category.objects.all()
+    title = Category.name
+    description = Category.description
+    image = Category.image
+
+    return render(request, 'catalog.html', {'categories': categories})
