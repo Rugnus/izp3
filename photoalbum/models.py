@@ -49,6 +49,25 @@ class VipAlbum(models.Model):
         return self.post.title
 
 
+class Full(models.Model):
+    title = models.CharField(max_length=250)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class FullAlbum(models.Model):
+    post = models.ForeignKey(Full, default=None, on_delete=models.CASCADE)
+    images = models.FileField(upload_to='images/')
+
+    def __str__(self):
+        return self.post.title
+
+
+#----------- Other tables -----------#
+
+
 class Category(models.Model):
     name = models.CharField('Категория', max_length=150)
     description = models.TextField('Описание')
@@ -77,3 +96,23 @@ class Contact(models.Model):
     class Meta:
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
+
+
+# Reviews
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name
+
+
+class Review(models.Model):
+    title = models.CharField(max_length=120)
+    description = models.TextField()
+    author = models.ForeignKey(Author, related_name='articles', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

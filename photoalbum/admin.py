@@ -1,6 +1,7 @@
 from django.contrib import admin
-
-from .models import Post, PostImage, Premium, PremAlbum, Vip, VipAlbum, Category, Contact
+from .models import Post, PostImage, Premium, PremAlbum, Vip, VipAlbum, Category, Contact, FullAlbum, Full, Author, \
+    Review
+from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
 
 
 class PostImageAdmin(admin.StackedInline):
@@ -59,6 +60,42 @@ class VipAlbumAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Category)
+#--------
 
-admin.site.register(Contact)
+
+class FullAlbumAdmin(admin.StackedInline):
+    model = FullAlbum
+
+
+@admin.register(Full)
+class FullAdmin(admin.ModelAdmin):
+    inlines = [FullAlbumAdmin]
+
+    class Meta:
+       model = Full
+
+
+@admin.register(FullAlbum)
+class FullAlbumAdmin(admin.ModelAdmin):
+    pass
+
+
+#-------
+
+
+@admin.register(Category)
+class CategoryAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'description', 'image')
+    pass
+
+# admin.site.register(Category)
+
+
+@admin.register(Contact)
+class ContactAdmin(ImportExportModelAdmin, ImportExportActionModelAdmin):
+    list_display = ('email', 'name', 'text')
+    pass
+
+
+admin.site.register(Author)
+admin.site.register(Review)

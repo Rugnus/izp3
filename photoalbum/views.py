@@ -1,8 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView
 from django.views.generic.base import View
+from rest_framework import viewsets
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from .serializers import ReviewSerializer
+from rest_framework.response import Response
 
-from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum, Category
+from .models import Post, PostImage, PremAlbum, Premium, Vip, VipAlbum, Category, FullAlbum, Full, Author, Review
 from .forms import ContactForm
+from .filters import CategotyFilter
+
+class ReviewViewSet(viewsets.ModelViewSet):
+
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+
+
+class SingleReviewView(RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
 
 def main_view(request):
     return render(request, 'main.html')
@@ -12,7 +29,8 @@ def blog_view(request):
     posts = Post.objects.all()
     prems = Premium.objects.all()
     vips = Vip.objects.all()
-    return render(request, 'blog.html', {'posts': posts, 'prems': prems, 'vips': vips})
+    fulls = Full.objects.all()
+    return render(request, 'blog.html', {'posts': posts, 'prems': prems, 'vips': vips, 'fulls': fulls})
 
 
 def detail_view(request, id):
@@ -102,11 +120,37 @@ def create_vip_view(request):
     return render(request, 'createvip-post.html')
 
 
+def fulldetail_view(request, id):
+    full = get_object_or_404(Full, id=id)
+    photos = FullAlbum.objects.filter(post=full)
+    return render(request, 'fulldatail.html', {
+        'vip': full,
+        'photos': photos
+    })
+
+
+def create_full_view(request):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        full = Full.objects.create(
+            title=title,
+            description=description
+        )
+
+        for file_num in range(0, int(length)):
+            FullAlbum.objects.create(
+                post=full,
+                images=request.FILES.get(f'images{file_num}')
+            )
+
+    return render(request, 'createfull-post.html')
+
+
 def catalog_view(request):
     categories = Category.objects.all()
-    title = Category.name
-    description = Category.description
-    image = Category.image
 
     return render(request, 'catalog.html', {'categories': categories})
 
@@ -121,3 +165,4 @@ class AddContact(View):
         if form.is_valid():
             form.save()
         return redirect("/")
+

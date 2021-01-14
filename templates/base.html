@@ -21,7 +21,7 @@
           <a class="p-2 text-dark" href="{% url 'blog' %}">Мои фотоальбомы</a>
         <a class="p-2 text-dark" href="{% url 'contact' %}">Контакты</a>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Добавить фотоальбом</a>
+      <a class="btn btn-outline-primary" href="{% url 'catalog' %}">Добавить фотоальбом</a>
     </header>
 
         {% block content %}

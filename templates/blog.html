@@ -67,6 +67,28 @@
             {% endfor %}
           </div>
             <a class="btn btn-success" href="{% url 'createvip-post' %}">Создать пост</a>
+
+        <h3 class="mt-5">FULL Альбомы</h3>
+          <div class="row row-cols-1 row-cols-md-2">
+            {% for full in fulls %}
+            <div class="col mb-4">
+              <div class="card">
+                <div class="view overlay">
+                  <img class="card-img-top" src="{{full.image.url}}" alt="">
+                  <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">{{full.title}}</h4>
+                  <p class="card-text">{{full.description}}</p>
+                  <a href="{% url 'fulldetail' full.id %}" class="btn btn-primary btn-md">Read more</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+            <a class="btn btn-success" href="{% url 'createfull-post' %}">Создать пост</a>
     </div>
 
 {% endblock %}
