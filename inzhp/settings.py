@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'photoalbum',
     'import_export',
-    'django_filters'
+    'django_filters',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True
+}

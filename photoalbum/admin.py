@@ -97,5 +97,13 @@ class ContactAdmin(ImportExportModelAdmin, ImportExportActionModelAdmin):
     pass
 
 
-admin.site.register(Author)
-admin.site.register(Review)
+@admin.register(Author)
+class AuthorAdmin(ImportExportActionModelAdmin):
+    list_display = ('name', 'email')
+    pass
+
+
+@admin.register(Review)
+class ReviewAdmin(ImportExportActionModelAdmin):
+    list_display = ('title', 'description', 'author')
+    pass
