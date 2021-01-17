@@ -27,7 +27,7 @@ class Premium(models.Model):
 
 class PremAlbum(models.Model):
     post = models.ForeignKey(Premium, default=None, on_delete=models.CASCADE)
-    images = models.FileField(upload_to = 'images/')
+    images = models.FileField(upload_to = 'media/')
 
     def __str__(self):
         return self.post.title
