@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container py-4">
-
+        {% csrf_token %}
         <input type="file" multiple>
         <label>Title</label>
         <input type="text" id="title" class="form-control">
