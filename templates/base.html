@@ -1,3 +1,4 @@
+{% load auth_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,14 @@
 
 
     <title>Multi-Image Tutorial</title>
+
+    <style>
+      #header__message {
+        font-weight: bold;
+        color:rgb(255, 72, 0);
+        margin-right: 10px;
+      }
+    </style>
 </head>
 <body>
 
@@ -16,11 +25,26 @@
       <p class="h5 my-0 me-md-auto fw-normal">PhotoprinT</p>
       <nav class="my-2 my-md-0 me-md-3">
         <a class="p-2 text-dark" href="{% url 'main' %}">Главная</a>
-        <a class="p-2 text-dark" href="{% url 'catalog' %}">Каталог</a>
+        {% if request.user|has_group:"admin" or request.user|has_group:"customer" %}
+          <a class="p-2 text-dark" href="{% url 'catalog' %}">Каталог</a>
+        {% endif %}
+
           <a class="p-2 text-dark" href="{% url 'blog' %}">Мои фотоальбомы</a>
         <a class="p-2 text-dark" href="{% url 'contact' %}">Контакты</a>
+        {% if request.user|has_group:"admin" %}
+         <a class="p-2 text-dark" href="{% url 'front' %}">Фронт</a>
+        {% endif %}
+        <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
+        <span id="header__message">Привет, {{request.user}}</span>
+
       </nav>
-      <a class="btn btn-outline-primary" href="{% url 'catalog' %}">Добавить фотоальбом</a>
+      {% if request.user|has_group:"admin" or request.user|has_group:"customer" %}
+        <a class="btn btn-outline-primary" href="{% url 'catalog' %}">Добавить фотоальбом</a>
+      {% endif %}
+
+      {% if request.user|has_group:"admin" %}
+        <a class="btn btn-danger" href="/admin" style="margin-left: 10px">Перейти в админ-панель</a>
+      {% endif %}
     </header>
 
         {% block content %}
@@ -32,7 +56,8 @@
         <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 
 
 

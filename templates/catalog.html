@@ -20,6 +20,8 @@
                   <div class="card-body">
                     <h5 class="card-title">{{ category.name}}</h5>
                     <p class="card-text">{{ category.description }}</p>
+                    <p class="card-text">Максимальный размер изображения: {{ category.max_length }}</p>
+                    
                       <a href="{% url 'create-post' %}" class="btn btn-primary">Создать</a>
 
                   </div>
