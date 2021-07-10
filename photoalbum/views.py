@@ -37,7 +37,7 @@ def main_view(request):
 
 def pie_chart(request):
     labels = ['BASIC', 'PRO', 'VIP', 'FULL']
-    data = []
+    data = [post_count, prems_count, vips_count, full_count]
 
     posts = Post.objects.all()
     post_count = posts.count()
@@ -55,7 +55,7 @@ def pie_chart(request):
 
     return render(request, 'blog.html', {
         'labels': labels,
-        'data': [post_count, prems_count, vips_count, full_count],
+        'data': data,
     })
 
 @login_required(login_url="login")
